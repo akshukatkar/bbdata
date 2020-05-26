@@ -1,3 +1,4 @@
 DB_PASSWORD="Akshay"
 DB_HOST="tst"
 SECURE_AUTH_KEY="lol"
+aws_secret='ABCDEF+c2L7yXeGvUyrPgYsDnWRRC1AYEXAMPLE'
