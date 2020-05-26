@@ -1,1 +1,3 @@
 DB_PASSWORD="Akshay"
+DB_HOST="tst"
+SECURE_AUTH_KEY="lol"
